@@ -2,7 +2,7 @@
 #include <format>
 #include <sqlite3.h> 
 
-#pragma comment(lib, "sqlite3.lib")
+//#pragma comment(lib, "sqlite3.lib")
 
 /* 
 * To build this sample, you need to install vcpkg and to install the x64 
