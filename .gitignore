@@ -34,3 +34,5 @@
 .vs/
 x64/
 test.db
+
+vcpkg_installed/

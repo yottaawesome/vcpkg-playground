@@ -1,0 +1,12 @@
+{
+  "name": "blah",
+  "version-string": "blah",
+  "dependencies": [
+    "lz4",
+    {
+      "name": "zlib",
+      "version>=": "1.2.13"
+    }
+  ],
+  "builtin-baseline": "1e9cf6939df1d0b9c1f71505a0e54fd9f4b35d2d"
+}
