@@ -23,7 +23,7 @@ namespace ssl = boost::asio::ssl;       // from <boost/asio/ssl.hpp>
 using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 // Sends a WebSocket message and prints the response
-int main(int argc, char** argv)
+int Run(int argc, char** argv)
 {
     try
     {

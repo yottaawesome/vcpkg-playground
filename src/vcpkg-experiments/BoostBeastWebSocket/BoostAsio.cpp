@@ -136,7 +136,7 @@ private:
     boost::array<char, 1> recv_buffer_;
 };
 
-int main()
+int Run()
 {
     try
     {
@@ -149,6 +149,5 @@ int main()
     {
         std::cerr << e.what() << std::endl;
     }
-
     return 0;
 }
