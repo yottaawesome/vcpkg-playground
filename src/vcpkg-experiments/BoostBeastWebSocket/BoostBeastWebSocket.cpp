@@ -1,10 +1,12 @@
 #define _WIN32_WINDOWS 0x0A00000C // sdkddkver.h https://learn.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=msvc-170
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
+#define BOOST_BIND_NO_PLACEHOLDERS
 //#define _CRT_SECURE_NO_WARNINGS
 
 //#include "example/common/root_certificates.hpp"
 
 #include <boost/beast/core.hpp>
+#include <boost/bind/bind.hpp>
 #include <boost/beast/ssl.hpp>
 #include <boost/beast/websocket.hpp>
 #include <boost/beast/websocket/ssl.hpp>

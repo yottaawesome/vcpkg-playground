@@ -1,10 +1,12 @@
 #define _WIN32_WINDOWS 0x0A00
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define _CRT_SECURE_NO_WARNINGS
+#define BOOST_BIND_NO_PLACEHOLDERS
 
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <boost/bind/bind.hpp>
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
