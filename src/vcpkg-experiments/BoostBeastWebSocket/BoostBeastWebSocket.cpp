@@ -1,6 +1,6 @@
-#define _WIN32_WINDOWS 0x0A000007
+#define _WIN32_WINDOWS 0x0A00000C // sdkddkver.h https://learn.microsoft.com/en-us/cpp/porting/modifying-winver-and-win32-winnt?view=msvc-170
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
-#define _CRT_SECURE_NO_WARNINGS
+//#define _CRT_SECURE_NO_WARNINGS
 
 //#include "example/common/root_certificates.hpp"
 

@@ -1,0 +1,7 @@
+{
+  "name": "sqlite3-demo",
+  "version-string": "1.0.0",
+  "dependencies": [
+    "sqlite3"
+  ]
+}
