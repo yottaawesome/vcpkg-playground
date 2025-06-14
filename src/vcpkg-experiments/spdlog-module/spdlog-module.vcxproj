@@ -135,19 +135,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="spdlog-helpers.cpp" />
     <ClCompile Include="spdlogmodule.ixx" />
-    <ClCompile Include="spdlogmodule2-part.cpp">
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">CompileAsCppModuleInternalPartition</CompileAs>
-      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">CompileAsCppModuleInternalPartition</CompileAs>
-    </ClCompile>
-    <ClCompile Include="spdlogmodule2.ixx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="spdlog-helpers.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
