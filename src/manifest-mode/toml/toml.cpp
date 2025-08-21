@@ -30,10 +30,25 @@ struct TomlFile
 		return result;
 	}
 
-	auto Set(auto&& newValue, std::convertible_to<std::string_view> auto...rest) const
+	auto Set(auto&& newValue, std::convertible_to<std::string_view> auto...nodes) const
 	{
-		toml::table* node = GetTomlFile().as_table();
+		[](this auto&& self, auto currentNode, auto&& newValue, auto&& nodeName, auto&&...remainingNodes) -> void
+		{
+			if constexpr (sizeof...(remainingNodes) == 0)
+			{
+				currentNode->insert_or_assign(nodeName, newValue);
+			}
+			else
+			{
+				if (not currentNode->contains(nodeName))
+					currentNode->insert_or_assign(nodeName, toml::table{});
+				self(currentNode->at(nodeName).as_table(), std::forward<decltype(newValue)>(newValue), std::forward<decltype(remainingNodes)>(remainingNodes)...);
+			}
+		}(GetTomlFile().as_table(), std::forward<decltype(newValue)>(newValue), std::forward<decltype(nodes)>(nodes)...);
+		return;
+
 			
+		toml::table* node = GetTomlFile().as_table();
 		int iter = 0;
 		((node = 
 			[](bool last, auto node, auto&& newValue, auto&& nodeName)
@@ -46,7 +61,7 @@ struct TomlFile
 				if (not node->contains(nodeName))
 					node->insert_or_assign(nodeName, toml::table{});
 				return node->at(nodeName).as_table();
-			}(iter++ == sizeof...(rest)-1, node, newValue, rest)), ...);
+			}(iter++ == sizeof...(nodes)-1, node, newValue, nodes)), ...);
 		return;
 
 		//auto value = GetTomlFile().at_path(first);
