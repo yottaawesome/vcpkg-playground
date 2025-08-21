@@ -30,38 +30,55 @@ struct TomlFile
 		return result;
 	}
 
-	auto Set(auto&& newValue, std::convertible_to<std::string_view> auto first, std::convertible_to<std::string_view> auto...rest) const
+	auto Set(auto&& newValue, std::convertible_to<std::string_view> auto...rest) const
 	{
-		auto value = GetTomlFile().at_path(first);
-		((value = value.at_path(rest)), ...);
-
-		if (value.type() == toml::node_type::none)
-		{
-			std::vector<std::pair<std::string_view, toml::table>> tables;
-			tables.reserve(15);
-			tables.push_back({ first, toml::table{} });
-			(tables.push_back({ rest, toml::table{} }), ...);
-
-			for (size_t i = tables.size() - 1; i > 0; i--)
+		toml::table* node = GetTomlFile().as_table();
+			
+		int iter = 0;
+		((node = 
+			[](bool last, auto node, auto&& newValue, auto&& nodeName)
 			{
-				tables[i - 1].second.insert_or_assign(tables[i].first, tables[i].second);
-			}
-
-			GetTomlFile().insert_or_assign(tables[0].first, tables[0].second);
-		}
-		else
-		{
-			value.visit(
-				[newValue](auto&& x)
+				if (last)
 				{
-					//if constexpr (toml::is_string<std::remove_cvref_t<decltype(x)>>)
-					if constexpr (Assignable<decltype(x), decltype(newValue)>)
-					{
-						std::println("Set");
-						x = newValue;
-					}
-				});
-		}
+					node->insert_or_assign(nodeName, newValue);
+					return node;
+				}
+				if (not node->contains(nodeName))
+					node->insert_or_assign(nodeName, toml::table{});
+				return node->at(nodeName).as_table();
+			}(iter++ == sizeof...(rest)-1, node, newValue, rest)), ...);
+		return;
+
+		//auto value = GetTomlFile().at_path(first);
+		//((value = value.at_path(rest)), ...);
+
+		//if (value.type() == toml::node_type::none)
+		//{
+		//	std::vector<std::pair<std::string_view, toml::table>> tables;
+		//	tables.reserve(15);
+		//	tables.push_back({ first, toml::table{} });
+		//	(tables.push_back({ rest, toml::table{} }), ...);
+
+		//	for (size_t i = tables.size() - 1; i > 0; i--)
+		//	{
+		//		tables[i - 1].second.insert_or_assign(tables[i].first, tables[i].second);
+		//	}
+
+		//	GetTomlFile().insert_or_assign(tables[0].first, tables[0].second);
+		//}
+		//else
+		//{
+		//	value.visit(
+		//		[newValue](auto&& x)
+		//		{
+		//			//if constexpr (toml::is_string<std::remove_cvref_t<decltype(x)>>)
+		//			if constexpr (Assignable<decltype(x), decltype(newValue)>)
+		//			{
+		//				std::println("Set");
+		//				x = newValue;
+		//			}
+		//		});
+		//}
 	}
 
 	void Print() const
@@ -164,7 +181,7 @@ void Manual()
 {
 	auto result = toml::parse_file("settings.toml");
 	toml::table* xx = result["server"]["a"].as_table();
-	
+	toml::table* xx2 = result["server"]["noob"].as_table();
 	toml::table a;
 	toml::table b{};
 	toml::table c{};
