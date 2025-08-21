@@ -32,6 +32,12 @@ struct TomlFile
 
 	auto Set(auto&& newValue, std::convertible_to<std::string_view> auto...nodes) const
 	{
+		/*toml::table* root = GetTomlFile().as_table();
+		int iter = 0;
+		((root->contains(nodes) 
+			? (root = root->at(nodes).as_table(), void())
+			: (root->insert_or_assign(nodes, toml::table{}), void())), ...);*/
+
 		[](this auto&& self, auto currentNode, auto&& newValue, auto&& nodeName, auto&&...remainingNodes) -> void
 		{
 			if constexpr (sizeof...(remainingNodes) == 0)
