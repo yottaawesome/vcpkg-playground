@@ -1,0 +1,5 @@
+[server]
+
+[server.a]
+url="https://blah.com"
+timeout = 3000
